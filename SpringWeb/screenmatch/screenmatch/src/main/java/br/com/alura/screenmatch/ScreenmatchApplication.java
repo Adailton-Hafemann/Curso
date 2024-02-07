@@ -18,13 +18,9 @@ public class ScreenmatchApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		
-		ConsumoApi consumoapi = new ConsumoApi();
-		String json = consumoapi.obterDados("https://www.omdbapi.com/?t=gilmore+girls&apikey=6585022c");
-		System.out.println(json);
-		IConverteDados conversor = new ConverteDados();
-		DadosSerie dados = conversor.obterDados(json, DadosSerie.class);
-		System.out.println(dados);
+
+		Principal principal = new Principal();
+		principal.exibeMenu();
 	}
 
 }
