@@ -7,6 +7,7 @@ import java.util.OptionalDouble;
 import br.com.alura.screenmatch.enums.Categoria;
 import br.com.alura.screenmatch.util.ConsultaChatGPT;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -23,29 +24,43 @@ public class Serie {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String titulo;
-	private Integer totalTemporadas;
-	private Double avaliacao;
+	
+	@Column(name="titulo")
+	private String title;
+	
+	@Column(name="totalTemporadas")
+	private Integer totalSeason;
+	
+	@Column(name="avaliacao")
+	private Double rating;
+	
 	@Enumerated(EnumType.STRING)
-	private Categoria genero;
-	private String atores;
+	@Column(name="genero")
+	private Categoria category;
+	
+	@Column(name="atores")
+	private String actor;
+	
+	@Column(name="poster")
 	private String poster;
-	private String sinopse;
+	
+	@Column(name="sinopse")
+	private String synopsis;
 
 	@OneToMany(mappedBy = "serie", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private List<Episodio> episodios = new ArrayList<>();
+	private List<Episode> episodes = new ArrayList<>();
 
 	public Serie() {
 	}
 
 	public Serie(DadosSerie dadosSerie) {
-		this.titulo = dadosSerie.titulo();
-		this.totalTemporadas = dadosSerie.totalTemporadas();
-		this.avaliacao = OptionalDouble.of(Double.valueOf(dadosSerie.avaliacao())).orElse(0);
-		this.genero = Categoria.fromString(dadosSerie.genero().split(",")[0].trim());
-		this.atores = dadosSerie.atores();
+		this.title = dadosSerie.titulo();
+		this.totalSeason = dadosSerie.totalTemporadas();
+		this.rating = OptionalDouble.of(Double.valueOf(dadosSerie.avaliacao())).orElse(0);
+		this.category = Categoria.fromString(dadosSerie.genero().split(",")[0].trim());
+		this.actor = dadosSerie.atores();
 		this.poster = dadosSerie.poster();
-		this.sinopse = ConsultaChatGPT.obterTraducao(dadosSerie.sinopse()).trim();
+		this.synopsis = ConsultaChatGPT.obterTraducao(dadosSerie.sinopse()).trim();
 	}
 
 	public Long getId() {
@@ -56,53 +71,53 @@ public class Serie {
 		this.id = id;
 	}
 
-	public List<Episodio> getEpisodios() {
-		return episodios;
+	public List<Episode> getEpisodes() {
+		return episodes;
 	}
 
-	public void setEpisodios(List<Episodio> episodios) {
-		episodios.forEach(e -> e.setSerie(this));
-		this.episodios = episodios;
+	public void setEpisodes(List<Episode> episodes) {
+		episodes.forEach(e -> e.setSerie(this));
+		this.episodes = episodes;
 	}
 
-	public String getTitulo() {
-		return titulo;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
-	public Integer getTotalTemporadas() {
-		return totalTemporadas;
+	public Integer getTotalSeason() {
+		return totalSeason;
 	}
 
-	public void setTotalTemporadas(Integer totalTemporadas) {
-		this.totalTemporadas = totalTemporadas;
+	public void setTotalSeason(Integer totalSeason) {
+		this.totalSeason = totalSeason;
 	}
 
-	public Double getAvaliacao() {
-		return avaliacao;
+	public Double getRating() {
+		return rating;
 	}
 
-	public void setAvaliacao(Double avaliacao) {
-		this.avaliacao = avaliacao;
+	public void setRating(Double rating) {
+		this.rating = rating;
 	}
 
-	public Categoria getGenero() {
-		return genero;
+	public Categoria getCategory() {
+		return category;
 	}
 
-	public void setGenero(Categoria genero) {
-		this.genero = genero;
+	public void setCategory(Categoria category) {
+		this.category = category;
 	}
 
-	public String getAtores() {
-		return atores;
+	public String getActor() {
+		return actor;
 	}
 
-	public void setAtores(String atores) {
-		this.atores = atores;
+	public void setActor(String actor) {
+		this.actor = actor;
 	}
 
 	public String getPoster() {
@@ -113,18 +128,18 @@ public class Serie {
 		this.poster = poster;
 	}
 
-	public String getSinopse() {
-		return sinopse;
+	public String getSynopsis() {
+		return synopsis;
 	}
 
-	public void setSinopse(String sinopse) {
-		this.sinopse = sinopse;
+	public void setSynopsis(String synopsis) {
+		this.synopsis = synopsis;
 	}
 
 	@Override
 	public String toString() {
-		return "genero=" + genero + ", titulo='" + titulo + '\'' + ", totalTemporadas=" + totalTemporadas
-				+ ", avaliacao=" + avaliacao + ", atores='" + atores + '\'' + ", poster='" + poster + '\''
-				+ ", sinopse='" + sinopse + '\'' + ", episodios='" + episodios + '\'';
+		return "genero=" + category + ", titulo='" + title + '\'' + ", totalTemporadas=" + totalSeason
+				+ ", avaliacao=" + rating + ", atores='" + actor + '\'' + ", poster='" + poster + '\''
+				+ ", sinopse='" + synopsis + '\'' + ", episodios='" + episodes + '\'';
 	}
 }

@@ -36,8 +36,8 @@ public class SerieService {
 
 		if (serie.isPresent()) {
 			Serie s = serie.get();
-			return new SerieDTO(s.getId(), s.getTitulo(), s.getTotalTemporadas(), s.getAvaliacao(), s.getGenero(),
-					s.getAtores(), s.getPoster(), s.getSinopse());
+			return new SerieDTO(s.getId(), s.getTitle(), s.getTotalSeason(), s.getRating(), s.getCategory(),
+					s.getActor(), s.getPoster(), s.getSynopsis());
 		}
 		return null;
 	}
@@ -50,7 +50,7 @@ public class SerieService {
 	public List<EpisodioDTO> obterTemporadasPorNumero(Long id, Long numero) {
         return serieRepository.obterEpisodiosPorTemporada(id, numero)
                 .stream()
-                .map(e -> new EpisodioDTO(e.getTemporada(), e.getNumeroEpisodio(), e.getTitulo()))
+                .map(e -> new EpisodioDTO(e.getSeason(), e.getEpisodeNumebr(), e.getTitle()))
                 .collect(Collectors.toList());
     }
 	
@@ -59,8 +59,8 @@ public class SerieService {
 
         if (serie.isPresent()) {
             Serie s = serie.get();
-            return s.getEpisodios().stream()
-                    .map(e -> new EpisodioDTO(e.getTemporada(), e.getNumeroEpisodio(), e.getTitulo()))
+            return s.getEpisodes().stream()
+                    .map(e -> new EpisodioDTO(e.getSeason(), e.getEpisodeNumebr(), e.getTitle()))
                     .collect(Collectors.toList());
         }
         return null;
@@ -70,12 +70,12 @@ public class SerieService {
         var serie = serieRepository.findById(id).get();
         return serieRepository.topEpisodiosPorSerie(serie)
                 .stream()
-                .map(e -> new EpisodioDTO(e.getTemporada(), e.getNumeroEpisodio(), e.getTitulo()))
+                .map(e -> new EpisodioDTO(e.getSeason(), e.getEpisodeNumebr(), e.getTitle()))
                 .collect(Collectors.toList());
     }
 
 	private List<SerieDTO> converteSerieToDto(List<Serie> series) {
-		return series.stream().map(s -> new SerieDTO(s.getId(), s.getTitulo(), s.getTotalTemporadas(), s.getAvaliacao(),
-				s.getGenero(), s.getAtores(), s.getPoster(), s.getSinopse())).collect(Collectors.toList());
+		return series.stream().map(s -> new SerieDTO(s.getId(), s.getTitle(), s.getTotalSeason(), s.getRating(),
+				s.getCategory(), s.getActor(), s.getPoster(), s.getSynopsis())).collect(Collectors.toList());
 	}
 }

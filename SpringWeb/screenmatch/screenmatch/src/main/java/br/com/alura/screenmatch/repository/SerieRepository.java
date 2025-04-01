@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import br.com.alura.screenmatch.enums.Categoria;
-import br.com.alura.screenmatch.model.Episodio;
+import br.com.alura.screenmatch.model.Episode;
 import br.com.alura.screenmatch.model.Serie;
 
 public interface SerieRepository extends JpaRepository<Serie, Long>{
@@ -26,13 +26,13 @@ public interface SerieRepository extends JpaRepository<Serie, Long>{
     List<Serie> seriesPorTemporadaEAValiacao(int totalTemporadas, double avaliacao);
     
     @Query("SELECT e FROM Serie s JOIN s.episodios e WHERE e.titulo ILIKE %:trechoEpisodio%")
-    List<Episodio> episodiosPorTrecho(String trechoEpisodio);
+    List<Episode> episodiosPorTrecho(String trechoEpisodio);
 
     @Query("SELECT e FROM Serie s JOIN s.episodios e WHERE s = :serie ORDER BY e.avaliacao DESC LIMIT 5")
-    List<Episodio> topEpisodiosPorSerie(Serie serie);
+    List<Episode> topEpisodiosPorSerie(Serie serie);
 
     @Query("SELECT e FROM Serie s JOIN s.episodios e WHERE s = :serie AND YEAR(e.dataLancamento) >= :anoLancamento")
-    List<Episodio> episodiosPorSerieEAno(Serie serie, int anoLancamento);
+    List<Episode> episodiosPorSerieEAno(Serie serie, int anoLancamento);
     
     List<Serie> findTop5ByOrderByEpisodiosDataLancamentoDesc();
     
@@ -43,5 +43,5 @@ public interface SerieRepository extends JpaRepository<Serie, Long>{
     List<Serie> encontrarEpisodiosMaisRecentes();
     
     @Query("SELECT e FROM Serie s JOIN s.episodios e WHERE s.id = :id AND e.temporada = :numero")
-    List<Episodio> obterEpisodiosPorTemporada(Long id, Long numero);
+    List<Episode> obterEpisodiosPorTemporada(Long id, Long numero);
 }
