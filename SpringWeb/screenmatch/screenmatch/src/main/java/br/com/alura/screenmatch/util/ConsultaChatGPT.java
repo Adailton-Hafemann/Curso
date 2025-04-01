@@ -1,4 +1,4 @@
-package br.com.alura.screenmatch.service;
+package br.com.alura.screenmatch.util;
 
 import com.theokanning.openai.completion.CompletionRequest;
 import com.theokanning.openai.service.OpenAiService;

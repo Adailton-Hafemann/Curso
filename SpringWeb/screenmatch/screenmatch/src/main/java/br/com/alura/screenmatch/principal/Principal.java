@@ -16,8 +16,8 @@ import br.com.alura.screenmatch.model.DadosTemporada;
 import br.com.alura.screenmatch.model.Episodio;
 import br.com.alura.screenmatch.model.Serie;
 import br.com.alura.screenmatch.repository.SerieRepository;
-import br.com.alura.screenmatch.service.ConsumoApi;
-import br.com.alura.screenmatch.service.ConverteDados;
+import br.com.alura.screenmatch.util.ConsumoApi;
+import br.com.alura.screenmatch.util.ConverteDados;
 
 @Component
 public class Principal {

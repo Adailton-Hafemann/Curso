@@ -1,4 +1,4 @@
-package br.com.alura.screenmatch.service;
+package br.com.alura.screenmatch.util;
 
 public interface IConverteDados {
 

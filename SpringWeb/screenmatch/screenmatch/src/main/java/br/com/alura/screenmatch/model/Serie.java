@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.OptionalDouble;
 
 import br.com.alura.screenmatch.enums.Categoria;
-import br.com.alura.screenmatch.service.ConsultaChatGPT;
+import br.com.alura.screenmatch.util.ConsultaChatGPT;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
